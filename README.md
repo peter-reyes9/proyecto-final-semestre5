@@ -40,9 +40,7 @@ Facilitar el inicio de las personas que quieren aprender programación, mostrand
 ---
 
 ## 🌐 Enlace al sitio
-🔗 [Ver página en línea](https://tuusuario.github.io/pagina-pedro/)  
-*(el enlace se actualizará una vez el proyecto esté publicado en GitHub Pages).*
-
+🔗 https://peter-reyes9.github.io/proyecto-final-semestre5/
 ---
 
 ## ✨ Autor
