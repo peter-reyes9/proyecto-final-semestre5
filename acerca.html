@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acerca de Mí</title>
+    <link rel="stylesheet" href="9.index.css">
+    <style>
+        .about-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .about-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .about-header::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        .about-section {
+            background: rgba(26, 26, 26, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-section h2 {
+            color: #3498db;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .about-section p {
+            color: #fff;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .skill-item {
+            background: rgba(52, 152, 219, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(52, 152, 219, 0.2);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            background: rgba(52, 152, 219, 0.1);
+            border: 1px solid rgba(52, 152, 219, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: rgba(52, 152, 219, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #1a1a1a, #2c3e50);
+            opacity: 0.8;
+        }
+
+        .background-animation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Botón hamburguesa accesible -->
+    <button class="hamburger" aria-controls="sidebar" aria-expanded="false">
+        <span class="sr-only">Abrir menú</span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Overlay para cerrar el menú al hacer clic fuera -->
+    <div class="overlay"></div>
+
+    <!-- Menú lateral -->
+    <div class="sidebar" id="sidebar">
+        <nav>
+            <a href="r9.index.html">🏠 Inicio</a>
+            <a href="extensiones.html">💻 Extensiones</a>
+            <a href="lenguajes.html">🐍 Lenguajes</a>
+            <a href="rutas.html">🗺️ Guía</a>
+            <a href="acerca.html">📄 Acerca de mí</a>
+        </nav>
+    </div>
+
+    <div class="background-animation"></div>
+
+    <main class="about-container">
+        <div class="about-header">
+            <h1>Acerca de Mí</h1>
+        </div>
+
+        <section class="about-section">
+            <h2>🎯 Mi Propósito</h2>
+            <p>Decidi crear esta pagina web como una guia que puede ayudar a los que esten perdidos al inicio asi como
+                un dia lo estuve yo y como a veces me siento asi.</p>
+        </section>
+
+        <section class="about-section">
+            <h2>👨‍💻 Perfil Personal</h2>
+            <p>soy un joven de 17 años por un gran interes por la programacion desde los 12 años y aunque aun estoy
+                lejos de ser un experto,estoy cada dia mas lejos de donde empecé;a menos de un año de terminar la
+                preparatoria con mi carrera tecnica en programacion y aun con algo de esperanza de entar a la
+                universidad.</p>
+        </section>
+
+        <section class="about-section">
+            <h2>🚀 Conocimientos Actuales</h2>
+            <div class="skills-grid">
+                <div class="skill-item">HTML</div>
+                <div class="skill-item">CSS</div>
+                <div class="skill-item">JavaScript</div>
+                <div class="skill-item">Python</div>
+                <div class="skill-item">GitHub</div>
+                <div class="skill-item">VS Code</div>
+            </div>
+        </section>
+
+        <section class="about-section">
+            <h2>🌟 Aspiraciones Futuras</h2>
+            <p>Mi meta es convertirme en un desarrollador fullstack competente, con especial énfasis en:</p>
+            <div class="skills-grid">
+                <div class="skill-item">React</div>
+                <div class="skill-item">Django</div>
+                <div class="skill-item">SQL</div>
+                <div class="skill-item">AWS</div>
+            </div>
+        </section>
+
+        <section class="about-section">
+            <h2>📱 Contacto</h2>
+            <p>¡Me encantaría conectar contigo! Puedes encontrarme en:</p>
+            <div class="social-links">
+                <a href="tel:+523315447056" class="social-link">
+                    📞 33-1544-7056
+                </a>
+                <a href="https://www.instagram.com/reyes.9p?igsh=NGxibzI1aXR3b3do" target="_blank" class="social-link">
+                    📸 Instagram
+                </a>
+                <a href="mailto:reyespither1@gmail.com" class="social-link">
+                    📧 Gmail
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Funcionalidad del menú hamburguesa
+        const hamburger = document.querySelector('.hamburger');
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.querySelector('.overlay');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+            const isExpanded = hamburger.classList.contains('active');
+            hamburger.setAttribute('aria-expanded', isExpanded);
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+    </script>
+</body>
+
+</html>
