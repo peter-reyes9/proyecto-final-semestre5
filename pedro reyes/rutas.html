@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutas de Aprendizaje</title>
+    <link rel="stylesheet" href="9.index.css">
+    <style>
+        .path-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .path-card {
+            background: linear-gradient(135deg, #2193b0, #6dd5ed);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: white;
+        }
+
+        .path-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #1c7a94, #5ab9cc);
+        }
+
+        .path-card h2 {
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .path-card:nth-child(1) {
+            background: linear-gradient(135deg, #FF416C, #FF4B2B);
+        }
+
+        .path-card:nth-child(1):hover {
+            background: linear-gradient(135deg, #e63a61, #e64326);
+        }
+
+        .path-card:nth-child(2) {
+            background: linear-gradient(135deg, #4B79A1, #283E51);
+        }
+
+        .path-card:nth-child(2):hover {
+            background: linear-gradient(135deg, #406a8f, #223546);
+        }
+
+        .path-card:nth-child(3) {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+        }
+
+        .path-card:nth-child(3):hover {
+            background: linear-gradient(135deg, #0f867d, #32d671);
+        }
+
+        .path-card:nth-child(4) {
+            background: linear-gradient(135deg, #8E2DE2, #4A00E0);
+        }
+
+        .path-card:nth-child(4):hover {
+            background: linear-gradient(135deg, #7f28cc, #4200c9);
+        }
+
+        .path-card:nth-child(5) {
+            background: linear-gradient(135deg, #F2994A, #F2C94C);
+        }
+
+        .path-card:nth-child(5):hover {
+            background: linear-gradient(135deg, #d98842, #d9b444);
+        }
+
+        .path-card:nth-child(6) {
+            background: linear-gradient(135deg, #00B4DB, #0083B0);
+        }
+
+        .path-card:nth-child(6):hover {
+            background: linear-gradient(135deg, #009ec2, #00739c);
+        }
+
+        .path-card h2 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .path-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .path-modal::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #1a1a1a, #2c3e50);
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        .path-modal::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .path-modal-content {
+            background: rgba(26, 26, 26, 0.6);
+            backdrop-filter: blur(10px);
+            margin: 2rem auto;
+            padding: 2rem;
+            max-width: 820px;
+            border-radius: 16px;
+            position: relative;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            color: #2c3e50;
+            transition: transform 0.3s ease;
+        }
+
+        .close-modal:hover {
+            transform: rotate(90deg);
+        }
+
+        .learning-path {
+            position: relative;
+            padding: 1rem 0;
+        }
+
+        .path-step {
+            background: rgba(52, 152, 219, 0.1);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 2;
+            border-left: 4px solid #3498db;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .path-step:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+            background: rgba(52, 152, 219, 0.15);
+        }
+
+        .path-step::before {
+            content: '';
+            position: absolute;
+            left: -2px;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(52, 152, 219, 0.95), rgba(41, 128, 185, 0.85));
+            z-index: 1;
+            border-radius: 4px;
+        }
+
+        .path-step h3 {
+            color: #3498db;
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+            text-shadow: 0 0 1px rgba(52, 152, 219, 0.3);
+        }
+
+        .path-modal h2 {
+            background: linear-gradient(90deg, #2c3e50, #3498db);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .path-modal p {
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .resources-list {
+            margin-top: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .resources-list li {
+            margin-bottom: 0.8rem;
+            position: relative;
+        }
+
+        .resources-list li::before {
+            content: '→';
+            position: absolute;
+            left: -1.2rem;
+            color: #3498db;
+        }
+
+        .resources-list a {
+            color: #3498db;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        .resources-list a:hover {
+            color: #fff;
+            background-color: #3498db;
+        }
+
+        .resources-list li {
+            color: #fff;
+        }
+
+        .resources-list a:hover::after {
+            transform: scaleX(1);
+        }
+
+        .resources-list {
+            margin-top: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .resources-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .resources-list a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .resources-list a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Botón hamburguesa -->
+    <button class="hamburger" aria-label="Menú" aria-controls="sidebar" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Overlay para cerrar el menú al hacer clic fuera -->
+    <div class="overlay"></div>
+
+    <!-- Menú lateral -->
+    <div class="sidebar" id="sidebar">
+        <nav>
+            <a href="r9.index.html">🏠 Inicio</a>
+            <a href="extensiones.html">💻 Extensiones</a>
+            <a href="lenguajes.html">🐍 Lenguajes</a>
+            <a href="rutas.html">🗺️ Guía</a>
+            <a href="acerca.html">📄 Acerca de mí</a>
+        </nav>
+    </div>
+
+    <main>
+        <h1>Rutas de Aprendizaje en Programación</h1>
+
+        <div class="path-cards">
+            <!-- Frontend -->
+            <div class="path-card" data-path="frontend">
+                <h2>🎨 Desarrollo Frontend</h2>
+                <p>Crea interfaces de usuario atractivas y funcionales para sitios web y aplicaciones.</p>
+            </div>
+
+            <!-- Backend -->
+            <div class="path-card" data-path="backend">
+                <h2>⚙️ Desarrollo Backend</h2>
+                <p>Desarrolla la lógica y funcionalidad detrás de las aplicaciones web.</p>
+            </div>
+
+            <!-- Fullstack -->
+            <div class="path-card" data-path="fullstack">
+                <h2>🔄 Desarrollo Fullstack</h2>
+                <p>Domina tanto el frontend como el backend para crear aplicaciones web completas.</p>
+            </div>
+
+            <!-- Data Science -->
+            <div class="path-card" data-path="datascience">
+                <h2>📊 Ciencia de Datos</h2>
+                <p>Analiza y procesa grandes cantidades de datos para obtener insights valiosos.</p>
+            </div>
+
+            <!-- Mobile Development -->
+            <div class="path-card" data-path="mobile">
+                <h2>📱 Desarrollo Móvil</h2>
+                <p>Crea aplicaciones para dispositivos iOS y Android.</p>
+            </div>
+
+            <!-- DevOps -->
+            <div class="path-card" data-path="devops">
+                <h2>🔄 DevOps</h2>
+                <p>Automatiza y optimiza los procesos de desarrollo y despliegue de software.</p>
+            </div>
+        </div>
+
+        <!-- Modal para mostrar las rutas -->
+        <div class="path-modal" id="pathModal">
+            <div class="path-modal-content">
+                <button class="close-modal" onclick="closeModal()">✕</button>
+                <div id="pathContent"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Funcionalidad del menú hamburguesa
+        const hamburger = document.querySelector('.hamburger');
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.querySelector('.overlay');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+            hamburger.setAttribute('aria-expanded', hamburger.classList.contains('active'));
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+        // Rutas de aprendizaje
+        const pathContents = {
+            frontend: {
+                title: "Ruta de Desarrollo Frontend",
+                description: "El desarrollo frontend se centra en crear la interfaz de usuario que los visitantes ven y con la que interactúan.",
+                steps: [
+                    {
+                        title: "Fundamentos Web",
+                        content: "Aprende los conceptos básicos del desarrollo web:",
+                        resources: [
+                            { name: "HTML5", link: "lenguajes.html" },
+                            { name: "CSS3", link: "lenguajes.html" },
+                            { name: "JavaScript Básico", link: "lenguajes.html" }
+                        ]
+                    },
+                    {
+                        title: "CSS Avanzado",
+                        content: "Domina las técnicas modernas de diseño:",
+                        resources: [
+                            { name: "Flexbox", link: "#" },
+                            { name: "CSS Grid", link: "#" },
+                            { name: "Responsive Design", link: "#" }
+                        ]
+                    },
+                    {
+                        title: "JavaScript Moderno",
+                        content: "Profundiza en JavaScript y sus frameworks:",
+                        resources: [
+                            { name: "ES6+", link: "#" },
+                            { name: "React/Vue/Angular", link: "#" },
+                            { name: "TypeScript", link: "#" }
+                        ]
+                    }
+                ]
+            },
+            backend: {
+                title: "Ruta de Desarrollo Backend",
+                description: "El desarrollo backend se enfoca en la lógica del servidor y la gestión de datos.",
+                steps: [
+                    {
+                        title: "Fundamentos de Programación",
+                        content: "Aprende los conceptos básicos de programación:",
+                        resources: [
+                            { name: "Python", link: "lenguajes.html" },
+                            { name: "Java", link: "lenguajes.html" },
+                            { name: "JavaScript (Node.js)", link: "lenguajes.html" }
+                        ]
+                    },
+                    {
+                        title: "Bases de Datos",
+                        content: "Domina el manejo de datos:",
+                        resources: [
+                            { name: "SQL", link: "lenguajes.html" },
+                            { name: "MongoDB", link: "#" },
+                            { name: "PostgreSQL", link: "#" }
+                        ]
+                    },
+                    {
+                        title: "APIs y Servicios Web",
+                        content: "Aprende a crear y consumir APIs:",
+                        resources: [
+                            { name: "REST API", link: "#" },
+                            { name: "GraphQL", link: "#" },
+                            { name: "Autenticación y Seguridad", link: "#" }
+                        ]
+                    }
+                ]
+            },
+            fullstack: {
+                title: "Ruta de Desarrollo Fullstack",
+                description: "El desarrollo fullstack combina habilidades de frontend y backend para crear aplicaciones web completas.",
+                steps: [
+                    {
+                        title: "Frontend Fundamentals",
+                        content: "Domina las tecnologías del cliente:",
+                        resources: [
+                            { name: "HTML/CSS/JavaScript", link: "lenguajes.html" },
+                            { name: "Framework Frontend", link: "#" }
+                        ]
+                    },
+                    {
+                        title: "Backend Development",
+                        content: "Aprende desarrollo del lado del servidor:",
+                        resources: [
+                            { name: "Node.js/Python/Java", link: "lenguajes.html" },
+                            { name: "Bases de Datos", link: "#" }
+                        ]
+                    },
+                    {
+                        title: "DevOps y Despliegue",
+                        content: "Aprende a desplegar aplicaciones:",
+                        resources: [
+                            { name: "Docker", link: "lenguajes.html" },
+                            { name: "CI/CD", link: "#" }
+                        ]
+                    }
+                ]
+            },
+            datascience: {
+                title: "Ruta de Ciencia de Datos",
+                description: "La ciencia de datos combina estadísticas, programación y análisis de datos para obtener insights valiosos.",
+                steps: [
+                    {
+                        title: "Fundamentos",
+                        content: "Aprende las bases necesarias:",
+                        resources: [
+                            { name: "Python", link: "lenguajes.html" },
+                            { name: "Estadística", link: "#" },
+                            { name: "SQL", link: "lenguajes.html" }
+                        ]
+                    },
+                    {
+                        title: "Análisis de Datos",
+                        content: "Domina herramientas de análisis:",
+                        resources: [
+                            { name: "Pandas", link: "#" },
+                            { name: "NumPy", link: "#" },
+                            { name: "Visualización de Datos", link: "#" }
+                        ]
+                    },
+                    {
+                        title: "Machine Learning",
+                        content: "Aprende técnicas de ML:",
+                        resources: [
+                            { name: "Scikit-learn", link: "#" },
+                            { name: "TensorFlow", link: "#" },
+                            { name: "Deep Learning", link: "#" }
+                        ]
+                    }
+                ]
+            },
+            mobile: {
+                title: "Ruta de Desarrollo Móvil",
+                description: "El desarrollo móvil se centra en crear aplicaciones para dispositivos iOS y Android.",
+                steps: [
+                    {
+                        title: "Fundamentos",
+                        content: "Aprende los conceptos básicos:",
+                        resources: [
+                            { name: "Java/Kotlin (Android)", link: "lenguajes.html" },
+                            { name: "Swift (iOS)", link: "#" }
+                        ]
+                    },
+                    {
+                        title: "Desarrollo Cross-Platform",
+                        content: "Aprende frameworks multiplataforma:",
+                        resources: [
+                            { name: "React Native", link: "#" },
+                            { name: "Flutter", link: "#" }
+                        ]
+                    },
+                    {
+                        title: "Conceptos Avanzados",
+                        content: "Domina aspectos avanzados:",
+                        resources: [
+                            { name: "Arquitectura de Apps", link: "#" },
+                            { name: "Seguridad Móvil", link: "#" }
+                        ]
+                    }
+                ]
+            },
+            devops: {
+                title: "Ruta de DevOps",
+                description: "DevOps combina desarrollo y operaciones para optimizar el ciclo de vida del software.",
+                steps: [
+                    {
+                        title: "Fundamentos",
+                        content: "Aprende los conceptos básicos:",
+                        resources: [
+                            { name: "Linux", link: "#" },
+                            { name: "Git", link: "#" },
+                            { name: "Docker", link: "lenguajes.html" }
+                        ]
+                    },
+                    {
+                        title: "CI/CD",
+                        content: "Domina la integración y entrega continua:",
+                        resources: [
+                            { name: "Jenkins", link: "#" },
+                            { name: "GitHub Actions", link: "#" }
+                        ]
+                    },
+                    {
+                        title: "Cloud y Monitoreo",
+                        content: "Aprende cloud computing y monitoreo:",
+                        resources: [
+                            { name: "AWS/Azure/GCP", link: "#" },
+                            { name: "Kubernetes", link: "#" }
+                        ]
+                    }
+                ]
+            }
+        };
+
+
+
+        // Funcionalidad del modal
+        const modal = document.getElementById('pathModal');
+        const pathContent = document.getElementById('pathContent');
+
+        function showPath(path) {
+            const content = pathContents[path];
+            let html = `
+                <h2>${content.title}</h2>
+                <p>${content.description}</p>
+                <div class="learning-path">
+            `;
+
+            content.steps.forEach(step => {
+                html += `
+                    <div class="path-step">
+                        <h3>${step.title}</h3>
+                        <p>${step.content}</p>
+                        <ul class="resources-list">
+                            ${step.resources.map(resource =>
+                    `<li><a href="${resource.link}">${resource.name}</a></li>`
+                ).join('')}
+                        </ul>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            pathContent.innerHTML = html;
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Evento para las tarjetas
+        document.querySelectorAll('.path-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const path = card.dataset.path;
+                showPath(path);
+            });
+        });
+
+        // Cerrar modal al hacer clic fuera
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+
+</html>
